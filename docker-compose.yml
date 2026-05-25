@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  db:
+    image: jaydenhnguyen/clo835-a1-db:v1
+    container_name: clo835-a1-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: employees
+    networks:
+      - clo835-a1-network
+
+  web-blue:
+    image: jaydenhnguyen/clo835-a1-webapp:v1
+    container_name: blue
+    ports:
+      - "8081:8080"
+    environment:
+      APP_COLOR: blue
+      DBHOST: clo835-db
+      DBPORT: 3306
+      DBUSER: root
+      DBPWD: password
+      DATABASE: employees
+    depends_on:
+      - mysql
+    networks:
+      - clo835-network
+
+  web-pink:
+    image: jaydenhnguyen/clo835-a1-webapp:v1
+    container_name: pink
+    ports:
+      - "8082:8080"
+    environment:
+      APP_COLOR: pink
+      DBHOST: clo835-db
+      DBPORT: 3306
+      DBUSER: root
+      DBPWD: password
+      DATABASE: employees
+    depends_on:
+      - mysql
+    networks:
+      - clo835-network
+
+  web-lime:
+    image: jaydenhnguyen/clo835-a1-webapp:v1
+    container_name: lime
+    ports:
+      - "8083:8080"
+    environment:
+      APP_COLOR: lime
+      DBHOST: clo835-db
+      DBPORT: 3306
+      DBUSER: root
+      DBPWD: password
+      DATABASE: employees
+    depends_on:
+      - mysql
+    networks:
+      - clo835-network
+
+networks:
+  clo835-network:
+    driver: bridge
